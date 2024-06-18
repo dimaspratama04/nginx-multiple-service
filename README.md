@@ -1,5 +1,5 @@
 # nginx-multiple-service
-Template nginx for multiple services with ssl
+Template nginx for multiple services with ssl, add configuration below on same file !
 
 # Root Domain Configuration
 
