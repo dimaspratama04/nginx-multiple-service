@@ -1,9 +1,12 @@
 # nginx-multiple-service
-Template nginx for multiple services
+Template nginx for multiple services with ssl
 
-server {
+# Root Domain Configuration
+
+
+	server {
         listen 80;
-        server_name fearless.my.id;
+        server_name example.co.id;
         root /var/www/html;
         index index.html index.htm index.nginx-debian.html;
 
@@ -13,15 +16,16 @@ server {
 
         # SSL configuration
         listen 443 ssl;
-
         ssl on;
-        ssl_certificate         /etc/ssl/fearless.my.id/root/ssl.pem;
-        ssl_certificate_key     /etc/ssl/fearless.my.id/root/ssl.key;
-}
+        ssl_certificate         /etc/ssl/ssl.pem;
+        ssl_certificate_key     /etc/ssl/ssl.key;
+	}
 
-server {
+# Subdomain Configuration
+
+	server {
         listen 80;
-        server_name vpn.fearless.my.id;
+        server_name subdomain.example.co.id;
         root /var/www/html;
         index index.html index.htm index.nginx-debian.html;
 
@@ -29,12 +33,12 @@ server {
         location / {
                  return 301 https://$host$request_uri;
         }
-}
+	}
 
-server {
+	server {
         # SSL configuration
         listen 443 ssl;
-        server_name vpn.fearless.my.id;
+        server_name subdomain.example.co.id;
 
         location / {
                 proxy_pass https://localhost:8443;  # Forward to the service on port 8443
@@ -45,6 +49,6 @@ server {
         }
 
         ssl on;
-        ssl_certificate         /etc/ssl/fearless.my.id/vpn.fearless.my.id/ssl.pem;
-        ssl_certificate_key     /etc/ssl/fearless.my.id/vpn.fearless.my.id/ssl.key;
-}
+        ssl_certificate         /etc/ssl/ssl.pem;
+        ssl_certificate_key     /etc/ssl/ssl.key;
+	}
